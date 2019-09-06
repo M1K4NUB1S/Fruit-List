@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Liste des articles
+{% endblock %}
+
+{% block body %}
+    <h3>
+        <strong>Liste des
+            <i>{{ category.getName }}</i>
+        </strong>
+    </h3>
+</br>
+<div class="row col-6">
+    <table class="table table-active table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>Libellé</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for article in articles %}
+                <tr>
+                    <td>{{ article.getId }}</td>
+                    <td>{{ article.getLibelle }}</td>
+                    <td>
+
+                        <a href="{{ path('article_show', {'id': article.id}) }}">Détail</a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            |
+                            <a href="{{ path('article_edit', {'id': article.id}) }}">Modifier</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">Aucun article enregistré pour cette catégorie</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<strong>
+    <a href="{{ path('category_index') }}">Retour aux catégories</a>
+</strong>
+
+{% include 'footer.html.twig' %}{% endblock %}

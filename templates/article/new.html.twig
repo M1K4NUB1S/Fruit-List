@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvel Article
+{% endblock %}
+
+{% block body %}
+    <div class="col-4">
+        <h3>
+            <strong>Ajouter un article</strong>
+        </h3>
+
+        {{ include('article/_form.html.twig') }}
+    </br>
+    <a href="{{ path('article_index') }}">
+        <strong>Revenir à la liste</strong>
+    </a>
+</div>
+{% include 'footer.html.twig' %}{% endblock %}

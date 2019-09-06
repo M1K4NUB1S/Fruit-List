@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des catégories
+{% endblock %}
+
+{% block body %}
+    <h3>
+        <strong>Liste des catégories</strong>
+    </h3>
+    <div>
+        Cliquez sur une catégorie pour accéder aux articles correspondants
+    </div>
+</br>
+<div class="row col-6">
+    <table class="table table-active table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category in categories %}
+                <tr>
+                    <td>{{ category.id }}</td>
+                    <td>
+                        <a href="{{ path('article_search', {'id': category.id}) }}">{{category.name}}</a>
+                    </td>
+                    <td>
+                        <a href="{{ path('category_show', {'id': category.id}) }}">Détail</a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            |
+                            <a href="{{ path('category_edit', {'id': category.id}) }}">Modifier</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">no records found</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% if is_granted('ROLE_ADMIN') %}
+    <strong>
+        <a href="{{ path('category_new') }}">Ajouter une catégorie</a>
+    </strong>
+    |
+{% endif %}
+<strong>
+    <a href="{{ path('article_index') }}">Retour aux articles</a>
+</strong>
+{% include 'footer.html.twig' %}{% endblock %}
